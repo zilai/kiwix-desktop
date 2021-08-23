@@ -3,9 +3,11 @@
 #include "kconstants.h"
 #include "kiwixapp.h"
 #include "mainmenu.h"
+#include "tabbar.h"
 
 #include <QMouseEvent>
 #include <QAction>
+#include <QToolButton>
 
 TopWidget::TopWidget(QWidget *parent) :
     QToolBar(parent)
@@ -51,6 +53,8 @@ TopWidget::TopWidget(QWidget *parent) :
     addAction(menuAction);
     setContextMenuPolicy( Qt::PreventContextMenu );
 
+    connect(KiwixApp::instance(), &KiwixApp::currentTitleChanged,
+            this, &TopWidget::updateBackForwardButtons);
 
 #if !SYSTEMTITLEBAR
     addAction(QIcon(":/icons/minimize.svg"), "minimize", parent, SLOT(showMinimized()));
@@ -101,4 +105,41 @@ void TopWidget::mouseMoveEvent(QMouseEvent *event) {
     auto delta = event->globalPos() - m_cursorPos;
     parentWidget()->move(delta);
     event->accept();
+}
+
+QToolButton* TopWidget::getBackButton() const
+{
+    auto app = KiwixApp::instance();
+    QAction *back = app->getAction(KiwixApp::HistoryBackAction);
+    return qobject_cast<QToolButton*>(widgetForAction(back));
+}
+
+QToolButton* TopWidget::getForwardButton() const
+{
+    auto app = KiwixApp::instance();
+    QAction *forward = app->getAction(KiwixApp::HistoryForwardAction);
+    return qobject_cast<QToolButton*>(widgetForAction(forward));
+}
+
+void TopWidget::updateBackForwardButtons()
+{
+    if (back_menu) {
+        back_menu->deleteLater();
+        back_menu = Q_NULLPTR;
+    }
+
+    if (forward_menu) {
+        forward_menu->deleteLater();
+        forward_menu = Q_NULLPTR;
+    }
+
+    WebView *webview = KiwixApp::instance()->getTabWidget()->currentWebView();
+
+    if (webview) {
+        back_menu = webview->getHistoryBackMenu();
+        forward_menu = webview->getHistoryForwardMenu();
+    }
+
+    getBackButton()->setMenu(back_menu);
+    getForwardButton()->setMenu(forward_menu);
 }

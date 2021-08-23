@@ -8,6 +8,8 @@
 #include <kiwix/reader.h>
 #include "findinpagebar.h"
 
+class QWebEngineHistoryItem;
+
 class WebView : public QWebEngineView
 {
     Q_OBJECT
@@ -21,6 +23,9 @@ public:
     bool isWebActionEnabled(QWebEnginePage::WebAction webAction) const;
     const QIcon &icon() { return m_icon; }
     const QString &zimId() { return m_currentZimId; }
+
+    QMenu* getHistoryBackMenu() const;
+    QMenu* getHistoryForwardMenu() const;
 
 public slots:
     void onUrlChanged(const QUrl& url);
@@ -39,6 +44,12 @@ protected:
     QString m_currentZimId;
     QIcon m_icon;
     QString m_linkHovered;
+
+private slots:
+    void gotoTriggeredHistoryItemAction();
+
+private:
+    void addHistoryItemAction(QMenu *menu, const QWebEngineHistoryItem &item, int n) const;
 };
 
 #endif // WEBVIEW_H

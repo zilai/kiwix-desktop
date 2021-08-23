@@ -8,6 +8,7 @@
 #include "webpage.h"
 #include <QToolTip>
 #include <QWebEngineSettings>
+#include <QWebEngineHistory>
 #include <QVBoxLayout>
 
 WebView::WebView(QWidget *parent)
@@ -27,6 +28,60 @@ bool WebView::isWebActionEnabled(QWebEnginePage::WebAction webAction) const
 {
     return page()->action(webAction)->isEnabled();
 }
+
+QMenu* WebView::getHistoryBackMenu() const
+{
+    QWebEngineHistory *h = history();
+
+    const int cur = h->currentItemIndex();
+    if (cur <= 0) {
+        return Q_NULLPTR;
+    }
+
+    QMenu *ret = new QMenu();
+    for (int i = 0 ; i < cur ; i++) {
+        addHistoryItemAction(ret, h->itemAt(i), i);
+    }
+    return ret;
+}
+
+QMenu* WebView::getHistoryForwardMenu() const
+{
+    QWebEngineHistory *h = history();
+
+    const int cur = h->currentItemIndex();
+    if (cur + 1 >= h->count()) {
+        return Q_NULLPTR;
+    }
+
+    QMenu *ret = new QMenu();
+    for (int i = cur + 1 ; i < h->count() ; i++) {
+        addHistoryItemAction(ret, h->itemAt(i), i);
+    }
+    return ret;
+}
+
+void WebView::addHistoryItemAction(QMenu *menu, const QWebEngineHistoryItem &item, int n) const
+{
+    QAction *a = menu->addAction(item.title());
+    a->setData(QVariant::fromValue(n));
+    connect(a, &QAction::triggered, this, &WebView::gotoTriggeredHistoryItemAction);
+}
+
+void WebView::gotoTriggeredHistoryItemAction()
+{
+    QAction *a = qobject_cast<QAction*>(QObject::sender());
+    if (!a)
+        return;
+
+    int n = a->data().toInt();
+    QWebEngineHistory *h = history();
+    if (n < 0 || n >= h->count())
+        return;
+
+    h->goToItem(h->itemAt(n));
+}
+
 
 QWebEngineView* WebView::createWindow(QWebEnginePage::WebWindowType type)
 {
