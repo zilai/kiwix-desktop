@@ -39,7 +39,7 @@ QMenu* WebView::getHistoryBackMenu() const
     }
 
     QMenu *ret = new QMenu();
-    for (int i = 0 ; i < cur ; i++) {
+    for (int i = cur - 1 ; i >= 0 ; i--) {
         addHistoryItemAction(ret, h->itemAt(i), i);
     }
     return ret;
