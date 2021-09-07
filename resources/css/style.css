@@ -50,10 +50,6 @@ SearchBar > QPushButton {
     width: 32px;
 }
 
-/* ----------------------------------------
-   Menu
-*/
-
 TopWidget QToolButton:pressed,
 TopWidget QToolButton::hover {
     border: 1px solid #3366CC;
@@ -81,6 +77,11 @@ TopWidget QToolButton#rightHistoryButton {
 TopWidget QToolButton#fullScreenButton {
     margin-right: 6px;
 }
+
+
+/* ----------------------------------------
+   Menu
+*/
 
 QMenu {
     border: none;
@@ -110,6 +111,7 @@ QMenu::indicator {
     width: 13px;
     height: 13px;
 }
+
 
 /* -----------------------------------------
     TabWidget
