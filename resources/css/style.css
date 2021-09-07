@@ -70,8 +70,8 @@ TopWidget QToolButton::menu-arrow {
     image: none;
 }
 
-TopWidget QToolButton#leftHistoryButton {
-    margin-left: 4px;
+TopWidget QToolButton#backButton {
+    margin-left: 4px;  /* see also: void WebViewBackMenu::showEvent(QShowEvent *) { geo.setX(geo.x() + 6); } */
 }
 
 TopWidget QToolButton#rightHistoryButton {

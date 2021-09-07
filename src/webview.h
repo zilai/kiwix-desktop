@@ -4,11 +4,30 @@
 #include <QWebEngineView>
 #include <QIcon>
 #include <QWheelEvent>
+#include <QMenu>
 
 #include <kiwix/reader.h>
 #include "findinpagebar.h"
 
 class QWebEngineHistoryItem;
+
+
+class WebViewBackMenu : public QMenu
+{
+    Q_OBJECT
+public:
+    WebViewBackMenu(QWidget* parent=nullptr) : QMenu(parent) {}
+    void showEvent(QShowEvent *);
+};
+
+class WebViewForwardMenu : public QMenu
+{
+    Q_OBJECT
+public:
+    WebViewForwardMenu(QWidget* parent=nullptr) : QMenu(parent) {}
+    void showEvent(QShowEvent *);
+};
+
 
 class WebView : public QWebEngineView
 {
