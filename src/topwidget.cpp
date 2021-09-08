@@ -133,6 +133,6 @@ void TopWidget::updateBackForwardButtons()
         forward_menu.reset();
     }
 
-    getBackButton()->setMenu(back_menu.get());
-    getForwardButton()->setMenu(forward_menu.get());
+    getBackButton()->setMenu(back_menu.data());
+    getForwardButton()->setMenu(forward_menu.data());
 }
