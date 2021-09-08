@@ -4,6 +4,7 @@
 #include <QToolBar>
 #include <QLineEdit>
 #include <QWebEnginePage>
+#include <QScopedPointer>
 
 #include "searchbar.h"
 
@@ -28,8 +29,8 @@ private:
     SearchBar m_searchEntry;
     QPoint m_cursorPos;
     ulong m_timestamp;
-    QMenu *back_menu = Q_NULLPTR;
-    QMenu *forward_menu = Q_NULLPTR;
+    QScopedPointer<QMenu, QScopedPointerDeleteLater> back_menu;
+    QScopedPointer<QMenu, QScopedPointerDeleteLater> forward_menu;
 
     QToolButton* getBackButton() const;
     QToolButton* getForwardButton() const;

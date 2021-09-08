@@ -123,23 +123,16 @@ QToolButton* TopWidget::getForwardButton() const
 
 void TopWidget::updateBackForwardButtons()
 {
-    if (back_menu) {
-        back_menu->deleteLater();
-        back_menu = Q_NULLPTR;
-    }
-
-    if (forward_menu) {
-        forward_menu->deleteLater();
-        forward_menu = Q_NULLPTR;
-    }
-
     WebView *webview = KiwixApp::instance()->getTabWidget()->currentWebView();
 
     if (webview) {
-        back_menu = webview->getHistoryBackMenu();
-        forward_menu = webview->getHistoryForwardMenu();
+        back_menu.reset(webview->getHistoryBackMenu());
+        forward_menu.reset(webview->getHistoryForwardMenu());
+    } else {
+        back_menu.reset();
+        forward_menu.reset();
     }
 
-    getBackButton()->setMenu(back_menu);
-    getForwardButton()->setMenu(forward_menu);
+    getBackButton()->setMenu(back_menu.get());
+    getForwardButton()->setMenu(forward_menu.get());
 }
