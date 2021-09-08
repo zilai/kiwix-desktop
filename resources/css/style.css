@@ -66,6 +66,10 @@ TopWidget QToolButton::menu-arrow {
     image: none;
 }
 
+TopWidget QToolButton::menu-indicator {
+   width: 7px; /* it can be hidden by setting 0px */
+}
+
 TopWidget QToolButton#backButton {
     margin-left: 4px;  /* see also: void WebViewBackMenu::showEvent(QShowEvent *) { geo.setX(geo.x() + 6); } */
 }
