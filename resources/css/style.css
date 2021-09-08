@@ -71,11 +71,7 @@ TopWidget QToolButton::menu-indicator {
 }
 
 TopWidget QToolButton#backButton {
-    margin-left: 4px;  /* see also: void WebViewBackMenu::showEvent(QShowEvent *) { geo.setX(geo.x() + 6); } */
-}
-
-TopWidget QToolButton#rightHistoryButton {
-    margin-right: 4px;
+    margin-left: 6px;  /* see also: void WebViewBackMenu::showEvent(QShowEvent *) { geo.setX(geo.x() + 6); } */
 }
 
 TopWidget QToolButton#fullScreenButton {
@@ -97,12 +93,7 @@ QMenu::item {
     min-height: 40px;
     max-height: 40px;
     border: 1px solid transparent;
-    padding: 2px 12px 2px 40px;
-}
-
-QMenu::icon {
-    min-width: 40px;
-    min-height: 40px;
+    padding: 5px 20px;
 }
 
 QMenu::item:selected {
@@ -110,7 +101,17 @@ QMenu::item:selected {
     border: 1px solid #3366CC;
 }
 
-QMenu::indicator {
+
+MainMenu::item {
+    padding: 2px 12px 2px 40px;
+}
+
+MainMenu::icon {
+    min-width: 40px;
+    min-height: 40px;
+}
+
+MainMenu::indicator {
     color: #666666;
     width: 13px;
     height: 13px;
