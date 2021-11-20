@@ -67,7 +67,9 @@ TopWidget QToolButton::menu-arrow {
 }
 
 TopWidget QToolButton::menu-indicator {
-   width: 7px; /* it can be hidden at all by setting 0px */
+    width: 7px; /* it can be hidden at all by setting 0px */
+    height: 7px;
+    subcontrol-origin: padding;
 }
 
 TopWidget QToolButton#backButton {
